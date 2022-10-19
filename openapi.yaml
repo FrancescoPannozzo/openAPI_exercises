@@ -17,8 +17,14 @@ paths:                # almeno un path-object, components o webhooks
             application/json: # media-type-object
               schema:   # schema-object
                 type: integer
-  /test{id}:
+  /test/{id}:
     post:
+      parameters:
+      - name: id
+        in: path
+        schema:
+          type: integer
+        required: true
       summary: input di un valore
       description: il client manda un valore intero
       responses:
