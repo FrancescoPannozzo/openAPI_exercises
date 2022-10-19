@@ -1,0 +1,31 @@
+# OpenAPI object (OpenAPI document)
+openapi: 3.1.0        # campo obbligatorio del root Object
+info:                 # campo obbligatorio del root Object
+  title: Un test      # campo obbligatorio dell'info-object
+  version: 0.0.1      # campo ommbigatorio dell'info-object
+  description: |      # descrizione dell'API
+    Un documento OpenAPI minimale
+paths:                # almeno un path-object, components o webhooks
+  /test:              # path-item object
+    get:              # operation-object, rappresenta un metodo del path-item object
+      summary: Prende una risorsa dal server
+      description: un descrizione dettagliata di cosa si prende
+      responses:      # un responses-object
+        "200":        # un response-object
+          description: everything ok # campo obbligatorio del response-object
+          content:    # campo content
+            application/json: # media-type-object
+              schema:   # schema-object
+                type: integer
+  /test{id}:
+    post:
+      summary: input di un valore
+      description: il client manda un valore intero
+      responses:
+        "202":
+          description everything ok
+          content:
+            schema:
+              type: integer
+
+
