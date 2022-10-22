@@ -100,6 +100,8 @@ components:
       description: latitudine della posizione dell'utente  da fornire
       schema:
         type: number
+        minimum: -90
+        maximum: 90
     lon:
       name: lon
       in: query
@@ -107,5 +109,7 @@ components:
       description: longitudine della posizione dell'utente da fornire
       schema:
         type: number
+        maximum: 180
+        minimum: -180
   
     
