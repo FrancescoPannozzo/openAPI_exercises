@@ -2,12 +2,12 @@ openapi: 3.0.1
 info:
   title: Fountains Project
   description: |
-    This API allow to tracking public funtains in Rome, having some feedback on it
+    This API allows to tracking public funtains in Rome, having some feedback on it
   version: 1.0.0
 paths:
   /fountains:
     get:
-      summary: get all fountains in a specific zone
+      summary: Get all fountains around a specificate coordinates
       description: |
         Get all fountains by giving two coordinates, lat and lon
       parameters:
@@ -97,7 +97,7 @@ components:
       name: lat
       in: query
       required: true
-      description: latitudine della posizione dell'utente  da fornire
+      description: latitude given by the client
       schema:
         type: number
         minimum: -90
@@ -106,7 +106,7 @@ components:
       name: lon
       in: query
       required: true
-      description: longitudine della posizione dell'utente da fornire
+      description: longitude given by the client
       schema:
         type: number
         maximum: 180
