@@ -1,0 +1,111 @@
+openapi: 3.0.1
+info:
+  title: Fountains Project
+  description: |
+    This API allow to tracking public funtains in Rome, having some feedback on it
+  version: 1.0.0
+paths:
+  /fountains:
+    get:
+      summary: get all fountains in a specific zone
+      description: |
+        Get all fountains by giving two coordinates, lat and lon
+      parameters:
+        - $ref: "#/components/parameters/lat"
+        - $ref: "#/components/parameters/lon"
+      responses:
+        "200":
+          description: Downloaded all the proximity fountains
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    lat:
+                      type: number
+                    lon:
+                      type: number
+                    tipo:
+                      type: string
+                      enum:
+                      - fontanella
+                      - nasone
+    post:
+      summary: Upload a single fountain
+      description: |
+        The client can add a single fountain not present in the app map,
+        I can do this by giving coordinates lat e lon
+      parameters:
+        - $ref: "#/components/parameters/lat"
+        - $ref: "#/components/parameters/lon"
+        - name: tipo
+          in: query
+          required: true
+          description: The type of the fountain
+          schema:
+            type: string
+            enum:
+            - fontanella
+            - nasone
+      responses:
+        "200":
+          description: Uploaded a fountain correctely
+        "403":
+          description: Error, the coordinates are not corrects
+  /fountains/{id}:
+    parameters:
+    - name: id
+      in: path
+      required: true
+      description: this is the fountain id
+      schema:
+        type: integer
+        description: e.g., /fountains/1234
+    put:
+      summary: Update a working/not working fountain
+      description: |
+        The client can give a feedback about a fountain working or not working
+      parameters:
+        - name: isworking
+          in: query
+          required: true
+          description: The working status of the fountain
+          schema:
+            type: boolean
+      responses:
+        "200":
+          description: Update done, everything ok
+        "404":
+          description: Fountain not found
+    delete:
+      summary: Delete a fountain
+      description: |
+        The client can give the fountain id to delete it
+      responses:
+        "200":
+          description: Fountain deleted, everything ok
+        "404":
+          description: Error, fountain not found
+        
+components:
+  parameters:
+    lat:
+      name: lat
+      in: query
+      required: true
+      description: latitudine della posizione dell'utente  da fornire
+      schema:
+        type: number
+    lon:
+      name: lon
+      in: query
+      required: true
+      description: longitudine della posizione dell'utente da fornire
+      schema:
+        type: number
+  
+    
