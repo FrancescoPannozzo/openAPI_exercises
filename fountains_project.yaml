@@ -29,8 +29,8 @@ paths:
                       type: number
                     lon:
                       type: number
-                    tipo:
-                      $ref: "#/components/schemas/fountainType"
+                    category:
+                      $ref: "#/components/schemas/fountainCategory"
                     status:
                       $ref: "#/components/schemas/fountainStatus"
     post:
@@ -41,12 +41,12 @@ paths:
       parameters:
         - $ref: "#/components/parameters/lat"
         - $ref: "#/components/parameters/lon"
-        - name: tipo
+        - name: category
           in: query
           required: true
           description: The type of the fountain
           schema:
-            $ref: "#/components/schemas/fountainType"
+            $ref: "#/components/schemas/fountainCategory"
       responses:
         "200":
           description: Uploaded a fountain correctely
@@ -111,7 +111,7 @@ components:
         maximum: 180
         minimum: -180
   schemas:
-    fountainType:
+    fountainCategory:
       type: string
       enum:
       - fontanella
