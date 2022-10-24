@@ -12,3 +12,9 @@ Also, they will be able to change the status or location of any fountains, add m
 A fountain’s status is “good” when it is in working condition and “faulty” if it’s broken. 
 The app will communicate with a central server via REST and JSON - no information is stored locally in the smartphone. 
 No authentication is needed, nor is user identification.
+
+Operazioni richieste:
+-	Ricevere la lista di fontane date delle coordinate
+-	Segnalare se una fontana funziona o no r/o cambiarne le coordinate
+-	Aggiungere una fontana che non è presente
+-	Cancellare una fontana che è presente in modo improprio
