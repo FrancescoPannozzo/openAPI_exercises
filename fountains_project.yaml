@@ -37,7 +37,7 @@ paths:
       summary: Upload a single fountain
       description: |
         The client can add a single fountain not present in the app map,
-        I can do this by giving coordinates lat e lon
+        Client can do this by giving coordinates lat e lon
       parameters:
         - $ref: "#/components/parameters/lat"
         - $ref: "#/components/parameters/lon"
