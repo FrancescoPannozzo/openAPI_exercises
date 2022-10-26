@@ -19,34 +19,17 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  type: object
-                  properties:
-                    id:
-                      type: integer
-                    lat:
-                      type: number
-                    lon:
-                      type: number
-                    category:
-                      $ref: "#/components/schemas/fountainCategory"
-                    status:
-                      $ref: "#/components/schemas/fountainStatus"
+                $ref: "#/components/schemas/fountain"
     post:
       summary: Upload a single fountain
       description: |
         The client can add a single fountain not present in the app map,
         Client can do this by giving coordinates lat e lon
-      parameters:
-        - $ref: "#/components/parameters/lat"
-        - $ref: "#/components/parameters/lon"
-        - name: category
-          in: query
-          required: true
-          description: The type of the fountain
-          schema:
-            $ref: "#/components/schemas/fountainCategory"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/fountain"
       responses:
         "200":
           description: Uploaded a fountain correctely
@@ -112,14 +95,34 @@ components:
         minimum: -180
   schemas:
     fountainCategory:
+      description: |
+        The type of the fountain (fontanella/nasone)
       type: string
       enum:
       - fontanella
       - nasone
     fountainStatus:
+      description: |
+        The working status of the fountain (good/faulty)
       type: string
       enum:
       - good
       - faulty
-  
-    
+    fountain:
+      description: |
+        A fountain object, it defines a fountain ID, latitude and longitude positions,
+        The status (good/falulty) and the typo (fontanella/nasone)
+      type: object
+      properties:
+        fountainID:
+          description: |
+            The ID of the fountain
+          type: integer
+        lat:
+          $ref: "#/components/parameters/lat"
+        lon:
+          $ref: "#/components/parameters/lon"
+        fountainCategory:
+          $ref: "#/components/schemas/fountainCategory"
+        fountainStatus:
+          $ref: "#/components/schemas/fountainStatus"
