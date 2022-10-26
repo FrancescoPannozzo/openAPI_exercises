@@ -5,9 +5,9 @@ info:
     This API allows to tracking public funtains in Rome, having some feedback on it
   version: 1.0.0
 paths:
-  /fountains:
+  /fountains/:
     get:
-      summary: Get all fountains around a specificate coordinates
+      summary: Get all fountains around specificates coordinates
       description: |
         Get all fountains by giving two coordinates, lat and lon
       parameters:
@@ -19,7 +19,9 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/fountain"
+                type: array
+                items:
+                  $ref: "#/components/schemas/fountain"
     post:
       summary: Upload a single fountain
       description: |
@@ -31,10 +33,12 @@ paths:
             schema:
               $ref: "#/components/schemas/fountain"
       responses:
-        "200":
-          description: Uploaded a fountain correctely
+        "201":
+          description: Created a fountain correctely
         "403":
           description: Error, the coordinates are not corrects
+        "404":
+          description: Error, fountain not found
   /fountains/{id}:
     parameters:
     - name: id
@@ -59,7 +63,7 @@ paths:
         - $ref: "#/components/parameters/lat"
         - $ref: "#/components/parameters/lon"
       responses:
-        "200":
+        "204":
           description: Update done, everything ok
         "404":
           description: Fountain not found
@@ -68,7 +72,7 @@ paths:
       description: |
         The client can give the fountain id to delete it
       responses:
-        "200":
+        "204":
           description: Fountain deleted, everything ok
         "404":
           description: Error, fountain not found
@@ -81,19 +85,27 @@ components:
       required: true
       description: latitude given by the client
       schema:
-        type: number
-        minimum: -90
-        maximum: 90
+        $ref: "#/components/schemas/lat"
     lon:
       name: lon
       in: query
       required: true
       description: longitude given by the client
       schema:
-        type: number
-        maximum: 180
-        minimum: -180
+        $ref: "#/components/schemas/lon"
   schemas:
+    id:
+      description: |
+        The ID of the fountain
+      type: integer
+    lat:
+      type: number
+      minimum: -90
+      maximum: 90
+    lon:
+      type: number
+      maximum: 180
+      minimum: -180
     fountainCategory:
       description: |
         The type of the fountain (fontanella/nasone)
@@ -115,9 +127,7 @@ components:
       type: object
       properties:
         fountainID:
-          description: |
-            The ID of the fountain
-          type: integer
+          $ref: "#/components/schemas/id"
         lat:
           $ref: "#/components/parameters/lat"
         lon:
@@ -126,3 +136,4 @@ components:
           $ref: "#/components/schemas/fountainCategory"
         fountainStatus:
           $ref: "#/components/schemas/fountainStatus"
+          
