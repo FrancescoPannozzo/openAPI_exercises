@@ -6,13 +6,13 @@ info:
   version: 1.0.0
 paths:
   /fountains/:
+    parameters:
+    - $ref: "#/components/parameters/lat"
+    - $ref: "#/components/parameters/lon"
     get:
       summary: Get all fountains around specificates coordinates
       description: |
         Get all fountains by giving two coordinates, lat and lon
-      parameters:
-        - $ref: "#/components/parameters/lat"
-        - $ref: "#/components/parameters/lon"
       responses:
         "200":
           description: Downloaded all the proximity fountains
@@ -41,27 +41,17 @@ paths:
           description: Error, fountain not found
   /fountains/{id}:
     parameters:
-    - name: id
-      in: path
-      required: true
-      description: this is the fountain id
-      schema:
-        type: integer
-        description: e.g., /fountains/1234
+    - $ref: "#/components/parameters/id"
     put:
       summary: Update a working/not working fountain or his position
       description: |
         The client can give a feedback about a fountain working or not working.
         The client can also change the fountain position
-      parameters:
-        - name: isworking
-          in: query
-          required: true
-          description: The working status of the fountain
-          schema:
-            $ref: "#/components/schemas/fountainStatus"
-        - $ref: "#/components/parameters/lat"
-        - $ref: "#/components/parameters/lon"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/fountain"
       responses:
         "204":
           description: Update done, everything ok
@@ -82,27 +72,36 @@ components:
     lat:
       name: lat
       in: query
-      required: true
+      required: false
       description: latitude given by the client
       schema:
         $ref: "#/components/schemas/lat"
     lon:
       name: lon
       in: query
-      required: true
+      required: false
       description: longitude given by the client
       schema:
         $ref: "#/components/schemas/lon"
+    id:
+      name: id
+      in: path
+      required: true
+      description: this is the fountain id, e.g., /fountains/1234
+      schema:
+        $ref: "#/components/schemas/id"
   schemas:
     id:
       description: |
         The ID of the fountain
       type: integer
     lat:
+      description: The latitude of the fountain
       type: number
       minimum: -90
       maximum: 90
     lon:
+      description: The longitude of the fountain
       type: number
       maximum: 180
       minimum: -180
@@ -129,9 +128,9 @@ components:
         fountainID:
           $ref: "#/components/schemas/id"
         lat:
-          $ref: "#/components/parameters/lat"
+          $ref: "#/components/schemas/lat"
         lon:
-          $ref: "#/components/parameters/lon"
+          $ref: "#/components/schemas/lon"
         fountainCategory:
           $ref: "#/components/schemas/fountainCategory"
         fountainStatus:

@@ -2,7 +2,7 @@
 openapi: 3.1.0        # campo obbligatorio del root Object
 info:                 # campo obbligatorio del root Object
   title: Un test      # campo obbligatorio dell'info-object
-  version: 0.0.1      # campo ommbigatorio dell'info-object
+  version: 0.0.1      # campo obbligatorio dell'info-object
   description: |      # descrizione dell'API
     Un documento OpenAPI minimale
 paths:                # almeno un path-object, components o webhooks
