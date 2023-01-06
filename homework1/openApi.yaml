@@ -4,5 +4,106 @@ info:
   description: |
     This API allows to manage an instagram-like web application
   version: 1.0.0
-  servers:
+servers:
   - url: http://localhost:3000
+paths:
+  /session:
+    post:
+      tags: ["login"]
+      summary: Logs in the user
+      description: |-
+        If the user does not exist, it will be created,
+        and an identifier is returned.
+        If the user exists, the user identifier is returned.
+      operationId: doLogin
+      requestBody:
+        description: User details
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: Maria
+                  pattern: '^.*?$'
+                  minLength: 3
+                  maxLength: 16
+        required: true
+      responses:
+        '201':
+          description: User log-in action successful
+          content:
+           application/json:
+            schema:
+            # Emanuele Panizzi, Enrico Bassetti 6
+            # WASA Project 2022/23 2022-10-31
+              type: object
+              properties:
+                identifier:
+                  # change here if you decide to use an integer
+                  # or any other type of identifier
+                  type: string
+                  example: "abcdef012345"
+  /profiles/{userId}:
+    get:
+      tags: ["user"]
+      operationId: getUserProfile
+      summary: Return one user profile
+      description: |
+        Get the user with associated userId
+      parameters:
+        - $ref: "#/components/parameters/userId"
+      responses:
+        "200":
+          description: Downloaded the specified user profile page
+          content:
+            multipart/mixed:
+              schema:
+                $ref: "#/components/schemas/thumbnailObject"
+        "404":
+          description: User not found   
+  /myStream:
+    get:
+      tags: ["user"]
+      operationId: getMyStream
+      summary: Return logged user stream
+      description: |
+        Get the user stream
+      responses:
+        "200":
+          description: Downloaded the user stream
+          content:
+            multipart/mixed:
+              schema:
+                $ref: "#/components/schemas/thumbnailObject"
+      
+components:
+  parameters:
+    userId:
+      name: userId
+      in: path
+      required: true
+      description: an user Id to search
+      schema:
+        type: string
+  schemas:
+    thumbnailObject:
+      description: |
+        A rappresentation of a thumnail pic with other informations
+      type: array
+      items:
+        type: object
+        properties:
+          thumbnailImage:
+            type: string
+            format: binary
+          dateTime:
+            type: string
+            format: date-time
+          nLikes:
+            type: integer
+          nComments:
+            type: integer
+
+
