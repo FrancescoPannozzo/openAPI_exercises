@@ -36,8 +36,6 @@ paths:
           content:
            application/json:
             schema:
-            # Emanuele Panizzi, Enrico Bassetti 6
-            # WASA Project 2022/23 2022-10-31
               type: object
               properties:
                 identifier:
@@ -61,6 +59,23 @@ paths:
             multipart/mixed:
               schema:
                 $ref: "#/components/schemas/thumbnailObject"
+            application/json:
+              schema:
+                description: |
+                  Information object with photo number, follower list and following list
+                type: object
+                properties:
+                  nPhoto:
+                    type: integer
+                  followers:
+                    type: array
+                    items:
+                      type: string
+                  following:
+                    type: array
+                    items:
+                      type: string
+                  
         "404":
           description: User not found   
   /myStream:
