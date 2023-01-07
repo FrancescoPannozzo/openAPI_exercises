@@ -200,6 +200,37 @@ paths:
         "202":
           description: User unfollowed
           
+  /profiles/{userId}/photos/{idPhoto}/like:
+    post: 
+      tags: ["photo"]
+      operationId: likePhoto
+      summary: Give a like to a photo
+      description: |
+        Allow to post a like on a user photo
+      parameters:
+        - $ref: "#/components/parameters/userId"
+        - $ref: "#/components/parameters/idPhoto"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: boolean
+      responses:
+        "202":
+          description: Like done
+    
+    delete:
+      tags: ["photo"]
+      operationId: unlikePhoto  
+      summary: unLike a photo
+      description: |
+        Allow to unlike one user photo
+      parameters:
+        - $ref: "#/components/parameters/userId"
+        - $ref: "#/components/parameters/idPhoto"
+      responses:
+        "202":
+          description: Like done
           
 components:
   parameters:
