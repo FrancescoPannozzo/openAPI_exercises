@@ -157,7 +157,7 @@ paths:
     delete:
       tags: ["photo"]
       operationId: deletePhoto
-      summary: Upload a user photo
+      summary: Delete a user photo
       description: |
         Upload a photo from the current user logged in
       parameters:
@@ -170,7 +170,37 @@ paths:
           description: Invalid user id or photo id
         "404":
           description: Photo not found
-      
+  
+  /profiles/{userId}/follows:
+    post:
+      tags: ["user"]
+      operationId: followUser
+      summary: Follow one user
+      description: |
+        Allow to follow the visitng user
+      parameters:
+        - $ref: "#/components/parameters/userId"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: boolean
+      responses:
+        "202":
+          description: User followed
+    delete:
+      tags: ["user"]
+      operationId: unfollowUser
+      summary: Unfollow one user
+      description: |
+        Allow to unfollow on user
+      parameters:
+        - $ref: "#/components/parameters/userId"
+      responses:
+        "202":
+          description: User unfollowed
+          
+          
 components:
   parameters:
     userId:
