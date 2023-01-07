@@ -49,57 +49,6 @@ paths:
       operationId: getUserProfile
       summary: Return one user profile
       description: |
-        Get the user with associated userIdopenapi: 3.0.1
-info:
-  title: WASAPhoto
-  description: |
-    This API allows to manage an instagram-like web application
-  version: 1.0.0
-servers:
-  - url: http://localhost:3000
-paths:
-  /session:
-    post:
-      tags: ["login"]
-      summary: Logs in the user
-      description: |-
-        If the user does not exist, it will be created,
-        and an identifier is returned.
-        If the user exists, the user identifier is returned.
-      operationId: doLogin
-      requestBody:
-        description: User details
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                name:
-                  type: string
-                  example: Maria
-                  pattern: '^.*?$'
-                  minLength: 3
-                  maxLength: 16
-        required: true
-      responses:
-        '201':
-          description: User log-in action successful
-          content:
-           application/json:
-            schema:
-              type: object
-              properties:
-                identifier:
-                  # change here if you decide to use an integer
-                  # or any other type of identifier
-                  type: string
-                  example: "abcdef012345"
-  /profiles/{userId}:
-    get:
-      tags: ["user"]
-      operationId: getUserProfile
-      summary: Return one user profile
-      description: |
         Get the user with associated userId
       parameters:
         - $ref: "#/components/parameters/userId"
@@ -109,7 +58,7 @@ paths:
           content:
             multipart/mixed:
               schema:
-                $ref: "#/components/schemas/thumbnailObject"
+                $ref: "#/components/schemas/thumbnailImage"
             application/json:
               schema:
                 description: |
@@ -161,11 +110,31 @@ paths:
           content:
             multipart/mixed:
               schema:
-                $ref: "#/components/schemas/thumbnailObject"
+                $ref: "#/components/schemas/thumbnailImage"
 
   /profiles/{userId}/photos/{idPhoto}:
+    get:
+      tags: ["photo"]
+      operationId: getPhoto
+      summary: get a user photo
+      description: |
+        Get a full user photo (not thumbnail)
+        with likes number and comments list
+      parameters:
+        - $ref: "#/components/parameters/userId"
+        - $ref: "#/components/parameters/idPhoto"
+      responses:
+        "202":
+          description: Photo, likes and comments downloaded
+          content:           
+            multipart/mixed:
+              schema:
+                $ref: "#/components/schemas/photoObject"
+        "404":
+          description: Photo not found
+          
     post:
-      tags: ["user"]
+      tags: ["photo"]
       operationId: uploadPhoto
       summary: Upload a user photo
       description: |
@@ -203,7 +172,7 @@ components:
       schema:
         type: string
   schemas:
-    thumbnailObject:
+    thumbnailImage:
       description: |
         A rappresentation of a thumnail pic with other informations
       type: array
@@ -220,98 +189,32 @@ components:
             type: integer
           nComments:
             type: integer
-
-
-
-      parameters:
-        - $ref: "#/components/parameters/userId"
-      responses:
-        "200":
-          description: Downloaded the specified user profile page
-          content:
-            multipart/mixed:
-              schema:
-                $ref: "#/components/schemas/thumbnailObject"
-            application/json:
-              schema:
-                description: |
-                  Information object with photo number, follower list and following list
-                type: object
-                properties:
-                  nPhoto:
-                    type: integer
-                  followers:
-                    type: array
-                    items:
-                      type: string
-                  following:
-                    type: array
-                    items:
-                      type: string
-                  
-        "404":
-          description: User not found
-    post:
-      tags: ["user"]
-      operationId: setMyUserName
-      summary: set the user name
-      description: Allow to set a new username
-      parameters:
-        - $ref: "#/components/parameters/userId"
-      requestBody:
-        content:
-          application/json:
-            schema:
-              description: The new username
-              type: string
-      responses:
-        "200":
-          description: Username updated, everything fine
-        "400":
-          description: The username is not allowed
-        
-  /myStream:
-    get:
-      tags: ["user"]
-      operationId: getMyStream
-      summary: Return logged user stream
+    photoObject:
       description: |
-        Get the user stream
-      responses:
-        "200":
-          description: Downloaded the user stream
-          content:
-            multipart/mixed:
-              schema:
-                $ref: "#/components/schemas/thumbnailObject"
-
+        An object with the original photo (not thumbnail), likes number
+        and comment list
+      type: object
+      properties:
+        originalImage:
+          type: string
+          format: binary
+        nLikes:
+          type: integer
+        comments:
+          type: array
+          items:
+            $ref: "#/components/schemas/comment"
+    comment:
+      description: |
+        A comment by one user to one image, it contains che userId of the
+        comment owner and the comment itself
+      type: object
+      properties:
+        userId:
+          type: string
+        commentList:
+          type: array
+          items:
+            type: string
       
-components:
-  parameters:
-    userId:
-      name: userId
-      in: path
-      required: true
-      description: an user Id to search
-      schema:
-        type: string
-  schemas:
-    thumbnailObject:
-      description: |
-        A rappresentation of a thumnail pic with other informations
-      type: array
-      items:
-        type: object
-        properties:
-          thumbnailImage:
-            type: string
-            format: binary
-          dateTime:
-            type: string
-            format: date-time
-          nLikes:
-            type: integer
-          nComments:
-            type: integer
-
 
