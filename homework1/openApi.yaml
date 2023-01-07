@@ -77,7 +77,26 @@ paths:
                       type: string
                   
         "404":
-          description: User not found   
+          description: User not found
+    post:
+      tags: ["user"]
+      operationId: setMyUserName
+      summary: set the user name
+      description: Allow to set a new username
+      parameters:
+        - $ref: "#/components/parameters/userId"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              description: The new username
+              type: string
+      responses:
+        "200":
+          description: Username updated, everything fine
+        "400":
+          description: The username is not allowed
+        
   /myStream:
     get:
       tags: ["user"]
@@ -92,6 +111,7 @@ paths:
             multipart/mixed:
               schema:
                 $ref: "#/components/schemas/thumbnailObject"
+
       
 components:
   parameters:
