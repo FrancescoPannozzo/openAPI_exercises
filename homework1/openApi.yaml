@@ -153,7 +153,23 @@ paths:
           description: Photo uploaded, everything ok
         "400":
           description: Photo format not valid
-        
+    
+    delete:
+      tags: ["photo"]
+      operationId: deletePhoto
+      summary: Upload a user photo
+      description: |
+        Upload a photo from the current user logged in
+      parameters:
+        - $ref: "#/components/parameters/userId"
+        - $ref: "#/components/parameters/idPhoto"
+      responses:
+        "202":
+          description: Photo deleted
+        "400":
+          description: Invalid user id or photo id
+        "404":
+          description: Photo not found
       
 components:
   parameters:
