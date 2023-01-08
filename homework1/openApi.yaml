@@ -75,7 +75,6 @@ paths:
                     type: array
                     items:
                       type: string
-                  
         "404":
           description: User not found
     post:
@@ -132,7 +131,6 @@ paths:
                 $ref: "#/components/schemas/photoObject"
         "404":
           description: Photo not found
-          
     post:
       tags: ["photo"]
       operationId: uploadPhoto
@@ -153,7 +151,6 @@ paths:
           description: Photo uploaded, everything ok
         "400":
           description: Photo format not valid
-    
     delete:
       tags: ["photo"]
       operationId: deletePhoto
@@ -218,7 +215,6 @@ paths:
       responses:
         "202":
           description: Like done
-    
     delete:
       tags: ["photo"]
       operationId: unlikePhoto  
@@ -231,6 +227,66 @@ paths:
       responses:
         "202":
           description: Like done
+          
+  /profiles/{userId}/photos/{idPhoto}/comments:
+    post: 
+      tags: ["photo"]
+      operationId: commentPhoto
+      summary: Give a comment to a photo
+      description: |
+        Allow to post a comment on a user photo
+      parameters:
+        - $ref: "#/components/parameters/userId"
+        - $ref: "#/components/parameters/idPhoto"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: string
+      responses:
+        "202":
+          description: comment done
+    delete:
+      tags: ["photo"]
+      operationId: uncommentPhoto  
+      summary: uncomment a photo
+      description: |
+        Allow to uncomment one user photo
+      parameters:
+        - $ref: "#/components/parameters/userId"
+        - $ref: "#/components/parameters/idPhoto"
+      responses:
+        "202":
+          description: comment erased
+          
+  /profiles/{userId}/bans:        
+    post: 
+      tags: ["photo"]
+      operationId: banUser
+      summary: ban one user
+      description: |
+        Allow to ban a user photo
+      parameters:
+        - $ref: "#/components/parameters/userId"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: boolean
+      responses:
+        "202":
+          description: ban done
+    delete:
+      tags: ["photo"]
+      operationId: unbanUser  
+      summary: unban a user
+      description: |
+        Allow to unban one user photo
+      parameters:
+        - $ref: "#/components/parameters/userId"
+      responses:
+        "202":
+          description: user unbanned
           
 components:
   parameters:
