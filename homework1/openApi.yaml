@@ -11,7 +11,6 @@ paths:
     post:
       tags: ["login"]
       summary: Logs in the user
-      security: [] # No security here
       description: |-
         If the user does not exist, it will be created,
         and an identifier is returned.
@@ -78,8 +77,6 @@ paths:
                       type: string
         "404":
           description: User not found
-        '401':
-          $ref: '#/components/responses/UnauthorizedError'
     post:
       tags: ["user"]
       operationId: setMyUserName
@@ -98,8 +95,6 @@ paths:
           description: Username updated, everything fine
         "400":
           description: The username is not allowed
-        '401':
-          $ref: '#/components/responses/UnauthorizedError'
         
   /myStream:
     get:
@@ -115,9 +110,7 @@ paths:
             multipart/mixed:
               schema:
                 $ref: "#/components/schemas/thumbnailImage"
-        '401':
-          $ref: '#/components/responses/UnauthorizedError'
-  
+
   /profiles/{userId}/photos/{idPhoto}:
     get:
       tags: ["photo"]
@@ -138,8 +131,6 @@ paths:
                 $ref: "#/components/schemas/photoObject"
         "404":
           description: Photo not found
-        '401':
-          $ref: '#/components/responses/UnauthorizedError'
     post:
       tags: ["photo"]
       operationId: uploadPhoto
@@ -176,9 +167,7 @@ paths:
           description: Invalid user id or photo id
         "404":
           description: Photo not found
-        '401':
-          $ref: '#/components/responses/UnauthorizedError'
-          
+  
   /profiles/{userId}/follows:
     post:
       tags: ["user"]
@@ -207,8 +196,6 @@ paths:
       responses:
         "202":
           description: User unfollowed
-        '401':
-          $ref: '#/components/responses/UnauthorizedError'
           
   /profiles/{userId}/photos/{idPhoto}/like:
     post: 
@@ -228,9 +215,6 @@ paths:
       responses:
         "202":
           description: Like done
-        '401':
-          $ref: '#/components/responses/UnauthorizedError'
-          
     delete:
       tags: ["photo"]
       operationId: unlikePhoto  
@@ -262,9 +246,6 @@ paths:
       responses:
         "202":
           description: comment done
-        '401':
-          $ref: '#/components/responses/UnauthorizedError'
-          
     delete:
       tags: ["photo"]
       operationId: uncommentPhoto  
@@ -277,8 +258,6 @@ paths:
       responses:
         "202":
           description: comment erased
-        '401':
-          $ref: '#/components/responses/UnauthorizedError'
           
   /profiles/{userId}/bans:        
     post: 
@@ -297,9 +276,6 @@ paths:
       responses:
         "202":
           description: ban done
-        '401':
-          $ref: '#/components/responses/UnauthorizedError'
-          
     delete:
       tags: ["photo"]
       operationId: unbanUser  
@@ -311,15 +287,8 @@ paths:
       responses:
         "202":
           description: user unbanned
-        '401':
-          $ref: '#/components/responses/UnauthorizedError'
           
 components:
-  securitySchemes:
-    bearerAuth:   
-      type: http
-      scheme: bearer
-      bearerFormat: JWT
   parameters:
     userId:
       name: userId
@@ -380,9 +349,5 @@ components:
           type: array
           items:
             type: string
-  responses:
-    UnauthorizedError:
-      description: Access identifier is missing or invalid
       
-security:
- - bearerAuth: []         # use the same name as above
+
