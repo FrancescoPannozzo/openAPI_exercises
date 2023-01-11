@@ -345,8 +345,8 @@ components:
         type: object
         properties:
           thumbnailImage:
+            # image url
             type: string
-            format: binary
           dateTime:
             type: string
             format: date-time
@@ -361,8 +361,8 @@ components:
       type: object
       properties:
         originalImage:
+          # image url
           type: string
-          format: binary
         nLikes:
           type: integer
         comments:
