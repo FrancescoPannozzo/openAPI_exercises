@@ -79,8 +79,8 @@ paths:
                       type: string
         "404":
           description: User not found
-        '401':
-          $ref: '#/components/responses/UnauthorizedError'
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
     post:
       tags: ["user"]
       operationId: setMyUserName
@@ -99,8 +99,8 @@ paths:
           description: Username updated, everything fine
         "400":
           description: The username is not allowed
-        '401':
-          $ref: '#/components/responses/UnauthorizedError'
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
         
   /myStream:
     get:
@@ -116,8 +116,8 @@ paths:
             multipart/mixed:
               schema:
                 $ref: "#/components/schemas/thumbnailImage"
-        '401':
-          $ref: '#/components/responses/UnauthorizedError'
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
   
   /profiles/{userId}/photos/{idPhoto}:
     get:
@@ -139,8 +139,8 @@ paths:
                 $ref: "#/components/schemas/photoObject"
         "404":
           description: Photo not found
-        '401':
-          $ref: '#/components/responses/UnauthorizedError'
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
     post:
       tags: ["photo"]
       operationId: uploadPhoto
@@ -177,8 +177,8 @@ paths:
           description: Invalid user id or photo id
         "404":
           description: Photo not found
-        '401':
-          $ref: '#/components/responses/UnauthorizedError'
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
           
   /profiles/{userId}/follows:
     post:
@@ -208,8 +208,8 @@ paths:
       responses:
         "202":
           description: User unfollowed
-        '401':
-          $ref: '#/components/responses/UnauthorizedError'
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
           
   /profiles/{userId}/photos/{idPhoto}/like:
     post: 
@@ -229,8 +229,8 @@ paths:
       responses:
         "202":
           description: Like done
-        '401':
-          $ref: '#/components/responses/UnauthorizedError'
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
           
     delete:
       tags: ["photo"]
@@ -263,8 +263,8 @@ paths:
       responses:
         "202":
           description: comment done
-        '401':
-          $ref: '#/components/responses/UnauthorizedError'
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
           
     delete:
       tags: ["photo"]
@@ -278,8 +278,8 @@ paths:
       responses:
         "202":
           description: comment erased
-        '401':
-          $ref: '#/components/responses/UnauthorizedError'
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
           
   /profiles/{userId}/bans:        
     post: 
@@ -298,8 +298,8 @@ paths:
       responses:
         "202":
           description: ban done
-        '401':
-          $ref: '#/components/responses/UnauthorizedError'
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
           
     delete:
       tags: ["photo"]
@@ -312,8 +312,8 @@ paths:
       responses:
         "202":
           description: user unbanned
-        '401':
-          $ref: '#/components/responses/UnauthorizedError'
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
           
 components:
   securitySchemes:
